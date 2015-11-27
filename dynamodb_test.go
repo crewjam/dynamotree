@@ -2,7 +2,6 @@ package dynamotree
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -23,7 +22,6 @@ type AccountT struct {
 	ID                  string
 	Name                string
 	Email               string
-	CreateTime          time.Time
 	Xfoo                string `json:",omitempty"`
 	FooXBar             string `json:",omitempty"`
 	MarshalFailPlease   bool
@@ -54,10 +52,9 @@ func (suite *StoreImplTest) TestBasics(c *C) {
 	c.Assert(err, IsNil)
 
 	v := AccountT{
-		ID:         "12345",
-		Name:       "alice",
-		Email:      "alice@example.com",
-		CreateTime: time.Unix(100000, 0),
+		ID:    "12345",
+		Name:  "alice",
+		Email: "alice@example.com",
 	}
 	err = s.Put([]string{"Accounts", "12345"}, &v)
 	c.Assert(err, IsNil)
@@ -145,10 +142,9 @@ func (suite *StoreImplTest) TestReservedCharacters(c *C) {
 	c.Assert(err, IsNil)
 
 	v := AccountT{
-		ID:         "12345",
-		Name:       "alice",
-		Email:      "alice@example.com",
-		CreateTime: time.Unix(100000, 0),
+		ID:    "12345",
+		Name:  "alice",
+		Email: "alice@example.com",
 	}
 	err = s.Put([]string{"Accounts", "12X345"}, &v)
 	c.Assert(err, Equals, ErrReservedCharacterInKey)
@@ -193,7 +189,6 @@ func (suite *StoreImplTest) TestMarshalFails(c *C) {
 		ID:                "12345",
 		Name:              "alice",
 		Email:             "alice@example.com",
-		CreateTime:        time.Unix(100000, 0),
 		MarshalFailPlease: true,
 	}
 	_ = s.Put([]string{"Accounts", "12345"}, &v)
@@ -211,7 +206,6 @@ func (suite *StoreImplTest) TestUnmarshalFails(c *C) {
 		ID:                  "12345",
 		Name:                "alice",
 		Email:               "alice@example.com",
-		CreateTime:          time.Unix(100000, 0),
 		UnmarshalFailPlease: true,
 	}
 	err = s.Put([]string{"Accounts", "12345"}, &v)
@@ -233,7 +227,6 @@ func (suite *StoreImplTest) TestLinkFailures(c *C) {
 		ID:                  "12345",
 		Name:                "alice",
 		Email:               "alice@example.com",
-		CreateTime:          time.Unix(100000, 0),
 		UnmarshalFailPlease: true,
 	}
 	err = s.Put([]string{"Accounts", "12345"}, &v)
@@ -260,7 +253,6 @@ func (suite *StoreImplTest) TestListAbort(c *C) {
 		ID:                  "12345",
 		Name:                "alice",
 		Email:               "alice@example.com",
-		CreateTime:          time.Unix(100000, 0),
 		UnmarshalFailPlease: true,
 	}
 	err = s.Put([]string{"Accounts", "12345"}, &v)
@@ -286,7 +278,6 @@ func (suite *StoreImplTest) TestLongPath(c *C) {
 		ID:                  "12345",
 		Name:                "alice",
 		Email:               "alice@example.com",
-		CreateTime:          time.Unix(100000, 0),
 		UnmarshalFailPlease: true,
 	}
 	key := []string{}
