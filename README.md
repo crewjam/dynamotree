@@ -1,5 +1,10 @@
 dynamotree is an implementation of hierarchical data storage for DynamoDB.
 
+
+[![Build Status](https://travis-ci.org/crewjam/dynamotree.svg?branch=master)](https://travis-ci.org/crewjam/dynamotree)
+
+[![](https://godoc.org/github.com/crewjam/dynamotree?status.png)](http://godoc.org/github.com/crewjam/dynamotree)
+
 In a hierarchal storage scheme objects are organised as they would be on a
 filesystem with parents and children. Hierarchial models are a useful
 abstraction, common on filesystems but rather more rare in databases.
@@ -31,7 +36,7 @@ We would write the following rows:
  - Key=`¦Accounts¦123456¦Links¦`, Child=`xyzpdq`
  - Key=`¦Accounts¦123456¦Links¦xyzpdq`, Child=``, LinkTarget=`http://example.com/`
 
-Note that unlike with file-systems, "¦Accounts¦123456" refers to a single object while "¦Accounts/123456¦" refers to a list of objects having a common prefix. Both can (and often do) coexist peacefully. 
+Note that unlike with file-systems, "¦Accounts¦123456" refers to a single object while "¦Accounts¦123456¦" refers to a list of objects having a common prefix. Both can (and often do) coexist peacefully. 
 
 ## Symbolic Links
 
